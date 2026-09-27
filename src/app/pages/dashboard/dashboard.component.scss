@@ -1,0 +1,91 @@
+.page-head {
+  margin-bottom: 22px;
+
+  p {
+    color: var(--ink-soft);
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.groupes__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+
+  h2 {
+    font-size: 1.1rem;
+  }
+}
+
+.link-all {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--teal-deep);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.groupe-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.groupe-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.12s ease;
+
+  &:hover {
+    border-color: var(--gold);
+  }
+}
+
+.groupe-card__main h3 {
+  font-size: 1.05rem;
+  margin-bottom: 2px;
+}
+
+.groupe-card__meta {
+  margin: 0 0 4px;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.groupe-card__beneficiaire {
+  margin: 0;
+  font-size: 0.86rem;
+}
+
+.groupe-card__progress {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    position: absolute;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--gold-deep);
+  }
+}

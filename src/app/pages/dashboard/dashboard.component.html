@@ -1,0 +1,74 @@
+<div class="container">
+  <header class="page-head">
+    <h1>Tableau de bord</h1>
+    <p>La vue d'ensemble de vos groupes d'épargne rotative — qui doit cotiser, et à qui revient la caisse.</p>
+  </header>
+
+  @if (tontines().length === 0) {
+    <app-empty-state
+      title="Aucun groupe pour l'instant"
+      message="Créez votre première tontine pour suivre les cotisations et le tour de chaque membre."
+      actionLabel="Créer un groupe"
+      actionLink="/groupes/nouveau"
+    />
+  } @else {
+    <section class="stats-grid">
+      <app-stat-card label="Groupes actifs" [value]="stats().groupesActifs + ''" tone="teal" />
+      <app-stat-card label="Membres" [value]="stats().membresTotal + ''" tone="teal" />
+      <app-stat-card
+        label="Collecté ce tour"
+        [value]="formaterMontant(stats().collecteCycle, stats().devise)"
+        [hint]="'sur ' + formaterMontant(stats().caissePrevueCycle, stats().devise) + ' attendus'"
+        tone="gold"
+      />
+      <app-stat-card
+        label="Cotisations en retard"
+        [value]="stats().retardsCycle + ''"
+        tone="danger"
+      />
+    </section>
+
+    <section class="groupes">
+      <div class="groupes__head">
+        <h2>Vos groupes</h2>
+        <a routerLink="/groupes" class="link-all">Tout voir</a>
+      </div>
+
+      <ul class="groupe-list">
+        @for (t of tontines(); track t.id) {
+          <li>
+            <a class="groupe-card card" [routerLink]="['/groupes', t.id]">
+              <div class="groupe-card__main">
+                <h3>{{ t.nom }}</h3>
+                <p class="groupe-card__meta">
+                  Tour {{ t.cycleActuel }} ·
+                  {{ t.frequence === 'hebdomadaire' ? 'cotisation hebdomadaire' : 'cotisation mensuelle' }}
+                </p>
+                <p class="groupe-card__beneficiaire">
+                  @if (beneficiaire(t.id); as b) {
+                    Bénéficiaire du tour : <strong>{{ b.nom }}</strong>
+                  } @else {
+                    Aucun membre inscrit
+                  }
+                </p>
+              </div>
+              <div class="groupe-card__progress">
+                <svg viewBox="0 0 36 36" width="46" height="46" aria-hidden="true">
+                  <circle cx="18" cy="18" r="15.5" fill="none" stroke="var(--line)" stroke-width="3" />
+                  <circle
+                    cx="18" cy="18" r="15.5" fill="none" stroke="var(--gold)" stroke-width="3"
+                    stroke-linecap="round"
+                    [attr.stroke-dasharray]="97.4"
+                    [attr.stroke-dashoffset]="97.4 - (97.4 * progression(t.id) / 100)"
+                    transform="rotate(-90 18 18)"
+                  />
+                </svg>
+                <span>{{ progression(t.id) }}%</span>
+              </div>
+            </a>
+          </li>
+        }
+      </ul>
+    </section>
+  }
+</div>

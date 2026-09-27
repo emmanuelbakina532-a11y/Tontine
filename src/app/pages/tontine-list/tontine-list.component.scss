@@ -1,0 +1,50 @@
+.page-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+
+  p {
+    color: var(--ink-soft);
+    margin: 0;
+  }
+}
+
+.liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  text-decoration: none;
+  color: inherit;
+
+  h3 {
+    font-size: 1rem;
+    margin-bottom: 2px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+
+  &:hover {
+    border-color: var(--gold);
+  }
+}
+
+.chevron {
+  color: var(--ink-soft);
+  flex-shrink: 0;
+}

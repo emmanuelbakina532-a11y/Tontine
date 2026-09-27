@@ -1,0 +1,21 @@
+<div class="shell">
+  <header class="top-bar">
+    <div class="container top-bar__inner">
+      <a routerLink="/" class="brand">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="28" height="28">
+            <circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2.5" />
+            <circle cx="20" cy="4.5" r="3" fill="currentColor" />
+          </svg>
+        </span>
+        <span class="brand__name">Tontine</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="content">
+    <router-outlet />
+  </main>
+
+  <app-bottom-nav />
+</div>

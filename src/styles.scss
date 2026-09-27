@@ -1,0 +1,233 @@
+// ---------------------------------------------------------------------------
+// Tontine — design tokens
+// Palette grounded in the ledger book and the FCFA note, not a generic SaaS
+// kit: deep ink-green for authority, warm gold for the pot being collected,
+// brick for the member whose turn has passed.
+// ---------------------------------------------------------------------------
+:root {
+  --ink: #17201a;
+  --ink-soft: #3a463c;
+  --paper: #efe7d3;
+  --paper-soft: #f7f2e4;
+  --card: #fffdf7;
+  --gold: #c89b3c;
+  --gold-deep: #a37e2b;
+  --teal: #1f5c4b;
+  --teal-deep: #163f34;
+  --brick: #8c4a2f;
+  --danger: #a63b2e;
+  --line: rgba(23, 32, 26, 0.14);
+  --line-soft: rgba(23, 32, 26, 0.08);
+  --shadow: 0 1px 2px rgba(23, 32, 26, 0.06), 0 8px 24px -12px rgba(23, 32, 26, 0.18);
+
+  --font-display: 'Fraunces', 'Iowan Old Style', serif;
+  --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --radius-s: 6px;
+  --radius-m: 12px;
+  --radius-l: 20px;
+
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(circle at 1px 1px, rgba(23, 32, 26, 0.05) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 0.4em;
+  color: var(--ink);
+}
+
+p {
+  margin: 0 0 1em;
+  max-width: 62ch;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: var(--font-body);
+}
+
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Shared utility classes used across page components
+// ---------------------------------------------------------------------------
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  border: 1px solid transparent;
+  border-radius: var(--radius-s);
+  padding: 0.65em 1.1em;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease;
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.btn-primary {
+  background: var(--teal);
+  color: var(--paper-soft);
+
+  &:hover {
+    background: var(--teal-deep);
+  }
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: var(--ink);
+
+  &:hover {
+    background: var(--gold-deep);
+  }
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--ink);
+
+  &:hover {
+    border-color: var(--ink);
+  }
+}
+
+.btn-danger {
+  background: transparent;
+  border-color: var(--danger);
+  color: var(--danger);
+
+  &:hover {
+    background: var(--danger);
+    color: var(--paper-soft);
+  }
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  margin-bottom: 1.1em;
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+
+  input,
+  select {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    padding: 0.65em 0.8em;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-s);
+    background: var(--card);
+    color: var(--ink);
+
+    &:focus {
+      border-color: var(--teal);
+    }
+  }
+
+  .hint {
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3em 0.7em;
+  border-radius: 999px;
+  line-height: 1;
+}
+
+.badge-paid {
+  background: rgba(31, 92, 75, 0.12);
+  color: var(--teal-deep);
+}
+
+.badge-due {
+  background: rgba(166, 59, 46, 0.12);
+  color: var(--danger);
+}
+
+.badge-gold {
+  background: rgba(200, 155, 60, 0.18);
+  color: var(--gold-deep);
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

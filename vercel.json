@@ -1,0 +1,5 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/tontine-digitale/browser",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}

@@ -1,0 +1,34 @@
+<div class="container">
+  <header class="page-head">
+    <div>
+      <h1>Mes groupes</h1>
+      <p>Tous vos groupes de tontine, en un coup d'œil.</p>
+    </div>
+    <a routerLink="/groupes/nouveau" class="btn btn-gold">Nouveau groupe</a>
+  </header>
+
+  @if (tontines().length === 0) {
+    <app-empty-state
+      title="Aucun groupe pour l'instant"
+      message="Créez votre première tontine pour suivre les cotisations et le tour de chaque membre."
+      actionLabel="Créer un groupe"
+      actionLink="/groupes/nouveau"
+    />
+  } @else {
+    <ul class="liste">
+      @for (t of tontines(); track t.id) {
+        <li>
+          <a class="item card" [routerLink]="['/groupes', t.id]">
+            <div>
+              <h3>{{ t.nom }}</h3>
+              <p>{{ t.membres.length }} membres · {{ formaterMontant(t.montantCotisation, t.devise) }} / {{ t.frequence === 'hebdomadaire' ? 'semaine' : 'mois' }}</p>
+            </div>
+            <svg class="chevron" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</div>

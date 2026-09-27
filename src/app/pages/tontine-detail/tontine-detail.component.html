@@ -1,0 +1,97 @@
+@if (tontine(); as t) {
+  <div class="container">
+    <header class="page-head">
+      <div>
+        <p class="eyebrow-link"><a routerLink="/groupes">Mes groupes</a></p>
+        <h1>{{ t.nom }}</h1>
+        @if (t.description) {
+          <p class="description">{{ t.description }}</p>
+        }
+      </div>
+      <a class="btn btn-ghost" [routerLink]="['/groupes', t.id, 'modifier']">Modifier</a>
+    </header>
+
+    <section class="wheel-section card">
+      <app-rotation-wheel [membres]="t.membres" [cycleActuel]="t.cycleActuel" />
+      <div class="wheel-section__facts">
+        <p><strong>{{ formaterMontant(service.montantAttendu(t), t.devise) }}</strong> attendus ce tour</p>
+        <p class="hint">Prochaine échéance : {{ formaterDate(service.dateProchaineCotisation(t)) }}</p>
+      </div>
+    </section>
+
+    <section class="stats-grid">
+      <app-stat-card
+        label="Collecté ce tour"
+        [value]="formaterMontant(service.montantCollecte(t), t.devise)"
+        tone="gold"
+      />
+      <app-stat-card
+        label="Cotisations en attente"
+        [value]="service.nombreRetards(t) + ''"
+        tone="danger"
+      />
+    </section>
+
+    <section class="membres">
+      <div class="membres__head">
+        <h2>Membres et cotisations — tour {{ t.cycleActuel }}</h2>
+        <button type="button" class="btn btn-ghost btn-small" (click)="afficherFormulaireMembre.set(!afficherFormulaireMembre())">
+          {{ afficherFormulaireMembre() ? 'Annuler' : 'Ajouter un membre' }}
+        </button>
+      </div>
+
+      @if (afficherFormulaireMembre()) {
+        <form class="ajout-membre card" (ngSubmit)="ajouterMembreRapide()">
+          <input type="text" [(ngModel)]="nouveauNom" name="nouveauNom" placeholder="Nom du membre" required />
+          <input type="tel" [(ngModel)]="nouveauTelephone" name="nouveauTelephone" placeholder="Téléphone (optionnel)" />
+          <button type="submit" class="btn btn-primary btn-small">Ajouter</button>
+        </form>
+      }
+
+      <ul class="membre-list">
+        @for (c of cotisations(); track c.membreId) {
+          @if (membreDe(c.membreId); as m) {
+            <li class="membre-item card">
+              <div class="membre-item__info">
+                <span class="membre-item__ordre">{{ m.ordre }}</span>
+                <div>
+                  <p class="membre-item__nom">{{ m.nom }}</p>
+                  @if (m.telephone) {
+                    <p class="membre-item__tel">{{ m.telephone }}</p>
+                  }
+                </div>
+              </div>
+              <div class="membre-item__actions">
+                <button
+                  type="button"
+                  class="badge"
+                  [class.badge-paid]="c.paye"
+                  [class.badge-due]="!c.paye"
+                  (click)="basculer(c.membreId)"
+                >
+                  {{ c.paye ? 'Cotisation reçue' : 'En attente' }}
+                </button>
+                <button type="button" class="btn-remove" (click)="retirerMembre(c.membreId)" [attr.aria-label]="'Retirer ' + m.nom + ' du groupe'">×</button>
+              </div>
+            </li>
+          }
+        }
+      </ul>
+    </section>
+
+    <section class="cloture card">
+      <div>
+        <h3>Clôturer ce tour</h3>
+        <p class="hint">Passe le groupe au tour {{ t.cycleActuel + 1 }} et remet les cotisations à zéro pour le prochain bénéficiaire.</p>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="clorreLeTour()">Passer au tour suivant</button>
+    </section>
+
+    <button type="button" class="lien-archiver" (click)="archiver()">Archiver ce groupe</button>
+  </div>
+} @else {
+  <div class="container">
+    <p>Ce groupe n'existe pas ou a été archivé.</p>
+    <a routerLink="/groupes" class="btn btn-ghost">Retour à mes groupes</a>
+  </div>
+}

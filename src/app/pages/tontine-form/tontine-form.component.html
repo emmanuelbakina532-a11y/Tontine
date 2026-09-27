@@ -1,0 +1,81 @@
+<div class="container">
+  <header class="page-head">
+    <h1>{{ modeEdition() ? 'Modifier le groupe' : 'Nouveau groupe' }}</h1>
+    <p>
+      @if (modeEdition()) {
+        Ajustez les informations générales de la tontine.
+      } @else {
+        Renseignez les règles de la tontine, puis ajoutez les membres dans l'ordre de leur tour.
+      }
+    </p>
+  </header>
+
+  <form [formGroup]="form" (ngSubmit)="enregistrer()" class="card form-card">
+    <div class="field">
+      <label for="nom">Nom du groupe</label>
+      <input id="nom" type="text" formControlName="nom" placeholder="Ex. Tontine des Bâtisseuses" />
+    </div>
+
+    <div class="field">
+      <label for="description">Description (optionnel)</label>
+      <input id="description" type="text" formControlName="description" placeholder="À quoi sert ce groupe ?" />
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="montant">Montant de la cotisation</label>
+        <input id="montant" type="number" min="100" step="100" formControlName="montantCotisation" />
+      </div>
+      <div class="field">
+        <label for="devise">Devise</label>
+        <input id="devise" type="text" formControlName="devise" />
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="frequence">Fréquence</label>
+        <select id="frequence" formControlName="frequence">
+          <option value="hebdomadaire">Chaque semaine</option>
+          <option value="mensuelle">Chaque mois</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="dateDebut">Date de départ</label>
+        <input id="dateDebut" type="date" formControlName="dateDebut" />
+      </div>
+    </div>
+
+    @if (!modeEdition()) {
+      <div class="membres-section">
+        <div class="membres-section__head">
+          <label>Membres, dans l'ordre du tour</label>
+          <button type="button" class="btn btn-ghost" (click)="ajouterMembre()">Ajouter un membre</button>
+        </div>
+
+        <ul class="membres-inputs" formArrayName="membres">
+          @for (ctrl of membresArray.controls; track ctrl; let i = $index) {
+            <li [formGroupName]="i">
+              <span class="membres-inputs__ordre">{{ i + 1 }}</span>
+              <input type="text" formControlName="nom" [placeholder]="'Nom du membre ' + (i + 1)" />
+              <input type="tel" formControlName="telephone" placeholder="Téléphone" />
+              @if (membresArray.length > 2) {
+                <button type="button" class="btn-remove" (click)="retirerMembre(i)" aria-label="Retirer ce membre">×</button>
+              }
+            </li>
+          }
+        </ul>
+        <p class="hint">Le premier membre de la liste reçoit la caisse au premier tour, puis la rotation suit cet ordre.</p>
+      </div>
+    }
+
+    @if (erreur()) {
+      <p class="erreur" role="alert">{{ erreur() }}</p>
+    }
+
+    <div class="actions">
+      <a routerLink="/groupes" class="btn btn-ghost">Annuler</a>
+      <button type="submit" class="btn btn-primary">{{ modeEdition() ? 'Enregistrer' : 'Créer le groupe' }}</button>
+    </div>
+  </form>
+</div>

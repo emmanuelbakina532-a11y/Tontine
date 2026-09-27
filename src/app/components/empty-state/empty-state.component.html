@@ -1,0 +1,11 @@
+<div class="empty-state">
+  <svg viewBox="0 0 64 64" width="44" height="44" aria-hidden="true">
+    <circle cx="32" cy="32" r="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="4 5" />
+    <path d="M32 20v16M32 42v.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
+  </svg>
+  <h3>{{ title() }}</h3>
+  <p>{{ message() }}</p>
+  @if (actionLabel() && actionLink()) {
+    <a class="btn btn-gold" [routerLink]="actionLink()">{{ actionLabel() }}</a>
+  }
+</div>

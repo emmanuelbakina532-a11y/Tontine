@@ -1,0 +1,21 @@
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 48px 24px;
+  color: var(--ink-soft);
+
+  svg {
+    color: var(--gold-deep);
+  }
+
+  h3 {
+    color: var(--ink);
+  }
+
+  p {
+    max-width: 40ch;
+  }
+}

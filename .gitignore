@@ -1,0 +1,12 @@
+# Dépendances
+/node_modules
+
+# Compilation
+/dist
+/out-tsc
+/.angular/cache
+
+# Divers
+.DS_Store
+*.log
+npm-debug.log*
